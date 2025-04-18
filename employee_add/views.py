@@ -8,5 +8,5 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
 
 class post_job(viewsets.ModelViewSet):
-    queryset = post_job.objects.all()
+    queryset = post_job.objects.all().order_by('-id')
     serializer_class = post_jobSerializer

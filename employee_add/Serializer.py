@@ -7,9 +7,25 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class post_jobSerializer(serializers.ModelSerializer):
+    # job_salary = serializers.SerializerMethodField()
     class Meta:
-        model = post_job
-        fields = '__all__'
+        model = post_job 
+        fields = ['id', 'job_title', 'job_department', 'job_position', 'job_experience', 'job_type', 'job_education', 'job_skills', 'job_description', 'job_location','job_min_salary','job_max_salary','job_status', 'job_created_at']
+
+    def get_job_salary(self, obj):
+        return {
+            'min_salary': obj.job_min_salary,
+            'max_salary': obj.job_max_salary
+        }
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['job_salary'] = {
+            'min_salary': instance.job_min_salary,
+            'max_salary': instance.job_max_salary
+        }
+        del data['job_min_salary']
+        del data['job_max_salary']
+        return data
 
 class job_applicationSerializer(serializers.ModelSerializer):
     class Meta:
