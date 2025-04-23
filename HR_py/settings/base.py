@@ -28,7 +28,6 @@ DEBUG = env.bool('DJANGO_DEBUG', default=True)
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'employee_add',
     'corsheaders',
 ]
@@ -55,14 +55,50 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+# CORS_ALLOW_ALL_ORIGINS = True 
+ 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",  # ✅ Allow Angular app
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+    "http://192.168.1.9:4200",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:4200",  # ✅ Allow CSRF from Angular
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+    "http://192.168.1.9:4200",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
 
 
 ROOT_URLCONF = 'HR_py.urls'
@@ -144,3 +180,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/api/employee_add/emp_data/'  
 MEDIA_ROOT = os.path.join(BASE_DIR, '')  
+
+AUTH_USER_MODEL = 'employee_add.Login'
+  # Use your custom user model

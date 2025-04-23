@@ -1,6 +1,6 @@
 from django.db import models
-from .choices import *
-from multiselectfield import MultiSelectField
+from .choices import GENDER_CHOICES, LEAVE_STATUS, LEAVE_TYPE,SALARY_STATUS, PERFORMANCE_RATING, TRAINING_TYPE, ATTENDANCE_STATUS, INTERVIEW_RESULT, JOB_TYPE, APPLICATION_STATUS
+from django.contrib.auth.models import AbstractUser
 
 class Employee_add(models.Model):
     id = models.AutoField(primary_key=True)
@@ -109,3 +109,11 @@ class Employee_attendance(models.Model):
 
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} - {self.attendance_date}"    
+    
+class Login(AbstractUser):
+    email = models.EmailField(max_length=200, unique=True)
+    password = models.CharField(max_length=200)
+    
+    username=None
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []

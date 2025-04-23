@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Employee_add,post_job,job_application,job_interview,Employee_leave,Employee_salary,Employee_performance,Employee_training,Employee_attendance
+from .models import Employee_add,Login,post_job,job_application,job_interview,Employee_leave,Employee_salary,Employee_performance,Employee_training,Employee_attendance
 
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,3 +67,18 @@ class Employee_performanceSerializer(serializers.ModelSerializer):
         model = Employee_performance
         fields = '__all__'
         
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Login
+        fields = ['id','email', 'password']
+        extra_kwargs = {'write_only': True}
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        instance = self.Meta.model(**validated_data)
+        if password is not None:
+            instance.set_password(password)
+        instance.save()
+        return instance
+    
+    
