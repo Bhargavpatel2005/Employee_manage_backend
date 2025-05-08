@@ -131,7 +131,7 @@ DATABASES = {
         'NAME': 'HR_manage',
         'USER': 'bnbrun',
         'PASSWORD': 'bnbrun',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }

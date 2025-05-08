@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from .models import Employee_add,post_job,Login
+from .models import *
 from rest_framework.views import APIView
-from .Serializer import EmployeeSerializer,post_jobSerializer,LoginSerializer
+from .Serializer import *
 import jwt,datetime
 
 
@@ -74,3 +74,35 @@ class logoutview(APIView):
             'message':'success'
         }
         return response
+        
+class hr_depatment(viewsets.ModelViewSet):
+    queryset = HR_department.objects.all()
+    serializer_class = hr_department_Serializer
+
+    def list(self, request, *args, **kwargs):
+        # Override to customize the response for listing HR jobs
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+
+        # Structure the response for the list
+        response_data = []
+        for item in serializer.data:
+            response_data.append({
+                "department": item['department'],
+                "data": item
+            })
+        
+        return Response(response_data)
+
+    def retrieve(self, request, *args, **kwargs):
+        # Override to customize the response for a single HR job
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        # Structure the response for a single job
+        response_data = {
+            "department": instance.department,
+            "data": serializer.data
+        }
+
+        return Response(response_data)

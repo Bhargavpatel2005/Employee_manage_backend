@@ -37,11 +37,17 @@ class post_job(models.Model):
     job_education = models.CharField(max_length=50)
     job_skills = models.CharField(max_length=50)
     job_description = models.CharField(max_length=1000)
+    job_Responsibilities = models.CharField(max_length=1000,default='')
     job_location = models.CharField(max_length=50)
-    job_min_salary = models.CharField(max_length=50)
-    job_max_salary = models.CharField(max_length=50)
+    job_min_salary = models.IntegerField(max_length=20)
+    job_max_salary = models.IntegerField(max_length=20)
     job_status = models.CharField(max_length=10)
+    Recruitment_start_Period=models.DateField(null=True, blank=True)
+    Recruitment_end_Period=models.DateField(null=True, blank=True)
+    post_app=models.CharField(max_length=50,null=True,blank=True)
+    quota=models.IntegerField(null=True)
     job_created_at = models.DateField(auto_now_add=True)
+    job_updated_at = models.DateField(auto_now=True)
     
     def __str__(self):
         return self.job_title
@@ -117,3 +123,20 @@ class Login(AbstractUser):
     username=None
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+class HR_department(models.Model):
+    department=models.CharField(max_length=50,default='HR')
+    title=models.CharField(max_length=50)
+    position=models.CharField(max_length=50)
+    skill = models.CharField(max_length=500)
+    experience=models.CharField(max_length=50)
+    type=models.CharField(max_length=50)
+    education=models.CharField(max_length=50)
+    loction=models.CharField(max_length=50)
+    description=models.CharField(max_length=50)
+    minsalary=models.CharField(max_length=50)
+    maxsalary=models.CharField(max_length=50)
+    status=models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title

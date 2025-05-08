@@ -159,4 +159,3 @@ APPLICATION_STATUS = [
     ('Approved', 'Approved'),
     ('Rejected', 'Rejected')
 ]
-
